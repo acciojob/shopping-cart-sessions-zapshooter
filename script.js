@@ -47,18 +47,17 @@ function renderCart() {
 
 // Add item to cart
 function addToCart(productId) {
-  let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-  const product = products.find((p) => p.id === parseInt(productId));
+  const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+  const product = products.find(p => p.id === Number(productId));
 
-  // Check if already in cart (assuming unique products)
-  if (cart.some((item) => item.id === product.id)) {
-    return; // Do not add duplicates
-  }
+  // remove this uniqueness guard ─ allow multiples
+  // if (cart.some(item => item.id === product.id)) return;
 
-  cart.push({ id: product.id, name: product.name, price: product.price });
+  cart.push({ ...product });
   sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
+
 
 // Remove item from cart
 function removeFromCart(productId) {
