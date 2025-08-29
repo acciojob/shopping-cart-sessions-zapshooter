@@ -47,22 +47,18 @@ function renderCart() {
 
 // Add item to cart
 function addToCart(productId) {
-  const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-  const product = products.find(p => p.id === Number(productId));
-
-  // remove this uniqueness guard ─ allow multiples
-  // if (cart.some(item => item.id === product.id)) return;
+  let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+  const product = products.find((p) => p.id === Number(productId));
 
   cart.push({ ...product });
   sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
-
-// Remove item from cart
+// Remove item from cart (removes all instances of this product ID)
 function removeFromCart(productId) {
   let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-  cart = cart.filter((item) => item.id !== parseInt(productId));
+  cart = cart.filter((item) => item.id !== Number(productId));
   sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
